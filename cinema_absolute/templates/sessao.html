@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Escolha seu Assento</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>{{ sessao.filme }}</h1>
+        <div class="tela">TELA DO CINEMA</div>
+
+        <form action="/comprar" method="post">
+            <input type="hidden" name="id_sessao" value="{{ sessao.id }}">
+            <div class="mapa">
+                {% for fila in mapa %}
+                <div class="fila">
+                    {% for assento in fila %}
+                    <label class="assento {{ 'ocupado' if assento.ocupado }}">
+                        <input type="checkbox" name="assentos" value="{{ assento.nome }}" {{ 'disabled' if
+                            assento.ocupado }} hidden>
+                        <span>{{ assento.nome }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn">Confirmar Compra</button>
+        </form>
+    </div>
+</body>
+
+</html>

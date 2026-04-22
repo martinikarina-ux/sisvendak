@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Filmes em Cartaz</title>
+</head>
+
+<body>
+    <nav>
+        <span>Olá, {{ session['user_nome'] }}!</span>
+        <a href="/logout" style="color: white; margin-left: 20px;">Sair</a>
+    </nav>
+
+    <div class="container">
+        <h2>🍿 Filmes em Cartaz</h2>
+        <div class="grid-filmes">
+            {% for s in sessoes %}
+            <div class="card">
+                <h3>{{ s.filme }}</h3>
+                <p><strong>Sala:</strong> {{ s.sala }}</p>
+                <p><strong>Horário:</strong> {{ s.horario }}</p>
+                <p><strong>Preço:</strong> R$ {{ "%.2f"|format(s.preco_inteira) }}</p>
+                <a href="/sessao/{{ s.id }}" class="btn">Comprar Ingresso</a>
+            </div>
+            {% endfor %}
+        </div>
+        {% if not sessoes %}
+        <p>Nenhuma sessão cadastrada no momento.</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Painel Administrativo</title>
+</head>
+
+<body>
+    <div class="container" style="max-width: 1000px;">
+        <header style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>🛡️ Painel do Gerente</h1>
+            <a href="/logout" class="btn" style="background: #c0392b;">Logout</a>
+        </header>
+
+        <section class="form-admin">
+            <h3>Cadastrar Nova Sessão</h3>
+            <form action="/admin/nova_sessao" method="post"
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <input type="text" name="filme" placeholder="Nome do Filme" required>
+                <input type="text" name="sala" placeholder="Sala (ex: Sala 01)" required>
+                <input type="text" name="horario" placeholder="Horário (ex: 20:00)" required>
+                <input type="number" step="0.01" name="preco" placeholder="Preço Inteira" required>
+                <input type="number" name="fileiras" placeholder="Qtd Fileiras (Máx 26)" required>
+                <input type="number" name="colunas" placeholder="Cadeiras por Fileira" required>
+                <button type="submit" class="btn" style="grid-column: span 2;">Criar Sessão</button>
+            </form>
+        </section>
+
+        <hr>
+
+        <section>
+            <h3>Relatório de Vendas</h3>
+            <table border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                <thead>
+                    <tr style="background: #333;">
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Filme</th>
+                        <th>Assento</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for v in vendas %}
+                    <tr>
+                        <td>{{ v.id }}</td>
+                        <td>{{ v.nome }}</td>
+                        <td>{{ v.filme }}</td>
+                        <td>{{ v.assento }}</td>
+                        <td>R$ {{ "%.2f"|format(v.total_pago) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>
+
+</html>
